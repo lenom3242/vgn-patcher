@@ -1,0 +1,14 @@
+# Backup files
+*.bak
+*.old
+
+# Node temporary / npm
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# System Files
+.DS_Store
+Thumbs.db
