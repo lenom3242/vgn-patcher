@@ -42,7 +42,7 @@ If you ever need to restore VGN VHUB to its original state:
 
 ---
 
-# Русский перевод (Russian Translation)
+# Русский перевод
 
 # Автопатчер клавиатуры для VGN VHUB
 
