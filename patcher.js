@@ -57,8 +57,40 @@ if (!fs.existsSync(assetsDir)) {
 }
 
 const files = fs.readdirSync(assetsDir);
-const homeFile = files.find(f => f.startsWith('home-') && f.endsWith('.js'));
-const indexFile = files.find(f => f.startsWith('index-') && f.endsWith('.js'));
+
+// Find home file robustly
+const homeFiles = files.filter(f => f.startsWith('home-') && f.endsWith('.js'));
+let homeFile = null;
+for (const file of homeFiles) {
+  const content = fs.readFileSync(path.join(assetsDir, file), 'utf8');
+  if (content.includes('productName === "VGN N75 PRO"')) {
+    homeFile = file;
+    break;
+  }
+}
+if (!homeFile && homeFiles.length > 0) {
+  homeFile = homeFiles.map(f => ({
+    name: f,
+    size: fs.statSync(path.join(assetsDir, f)).size
+  })).sort((a, b) => b.size - a.size)[0].name;
+}
+
+// Find index file robustly
+const indexFiles = files.filter(f => f.startsWith('index-') && f.endsWith('.js'));
+let indexFile = null;
+for (const file of indexFiles) {
+  const content = fs.readFileSync(path.join(assetsDir, file), 'utf8');
+  if (content.includes('VID === 12815 && PID === 20565') || content.includes('keyword: "VGN N75 PRO"')) {
+    indexFile = file;
+    break;
+  }
+}
+if (!indexFile && indexFiles.length > 0) {
+  indexFile = indexFiles.map(f => ({
+    name: f,
+    size: fs.statSync(path.join(assetsDir, f)).size
+  })).sort((a, b) => b.size - a.size)[0].name;
+}
 
 if (!homeFile || !indexFile) {
   console.error('[ERROR] Could not find the target asset files in dist/renderer/assets/');
@@ -66,6 +98,7 @@ if (!homeFile || !indexFile) {
   cleanup();
   process.exit(1);
 }
+
 
 const homeFilePath = path.join(assetsDir, homeFile);
 const indexFilePath = path.join(assetsDir, indexFile);
