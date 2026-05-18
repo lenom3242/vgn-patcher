@@ -42,8 +42,6 @@ If you ever need to restore VGN VHUB to its original state:
 
 ---
 
-# Русский перевод
-
 # Автопатчер клавиатуры для VGN VHUB
 
 Утилита, разработанная для патчинга приложения [VGN VHUB](https://vgnlab.com/pages/vgn-hub) с целью нативной поддержки клавиатуры **ATK N75 PRO** (как в проводном режиме, так и в беспроводном режиме 2.4ГГц).
