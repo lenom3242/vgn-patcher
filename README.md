@@ -1,6 +1,6 @@
 # VGN VHUB Keyboard Auto-Patcher
 
-A utility designed to patch the [VGN VHUB](https://game.vgn.club/download) application to support the **ATK N75 PRO** keyboard natively (both wired and 2.4G wireless modes).
+A utility designed to patch the [VGN VHUB](https://vgnlab.com/pages/vgn-hub) application to support the **ATK N75 PRO** keyboard natively (both wired and 2.4G wireless modes).
 
 ## 🔍 How it Works
 
@@ -39,3 +39,49 @@ If you ever need to restore VGN VHUB to its original state:
 3. Delete the patched `app.asar`.
 4. Rename `app.asar.bak` to `app.asar`.
 5. Relaunch VGN VHUB.
+
+---
+
+# Русский перевод (Russian Translation)
+
+# Автопатчер клавиатуры для VGN VHUB
+
+Утилита, разработанная для патчинга приложения [VGN VHUB](https://vgnlab.com/pages/vgn-hub) с целью нативной поддержки клавиатуры **ATK N75 PRO** (как в проводном режиме, так и в беспроводном режиме 2.4ГГц).
+
+## 🔍 Как это работает
+
+Приложение VGN VHUB имеет внутреннее ограничение на распознавание клавиатур по жестко заданным идентификаторам производителя (vendor ID) и продукта (product ID). Поскольку ATK N75 PRO фундаментально совместима с раскладкой N75 PRO, данная утилита:
+1. Находит и создает резервную копию файла `app.asar` в папке `C:\Program Files\VGN VHUB\resources\`.
+2. Распаковывает архив ASAR во временную директорию.
+3. Добавляет дескрипторы сканирования для USB ID клавиатуры ATK N75 PRO (`VID: 14139`, `PID: 4510` и `4509`).
+4. Обновляет логику распознавания и сопоставляет профили раскладки устройства с существующими ресурсами раскладки «VGN N75 PRO».
+5. Упаковывает архив ASAR обратно и перезапускает VGN VHUB.
+
+---
+
+## 🚀 Использование
+
+### Требования
+- Установленный **Node.js** (необходим для работы движка патчера, а также для распаковки и упаковки Electron-файла ASAR).
+- **Windows PowerShell** с правами администратора (необходим для остановки/запуска службы VGN VHUB и изменения файлов в директории `C:\Program Files`).
+
+### Запуск патчера
+
+1. Склонируйте или скачайте этот репозиторий на свой компьютер.
+2. Нажмите правой кнопкой мыши по файлу `patch.ps1` и выберите **Выполнить с помощью PowerShell** (Run with PowerShell) или откройте консоль PowerShell от имени администратора в этой папке и выполните:
+   ```powershell
+   Set-ExecutionPolicy Bypass -Scope Process -Force
+   .\patch.ps1
+   ```
+3. Скрипт автоматически запросит права администратора, остановит VGN VHUB, если приложение запущено, пропатчит файлы и запустит его снова!
+
+---
+
+## 🛠️ Откат / Восстановление
+
+Если вам когда-либо понадобится вернуть VGN VHUB в исходное состояние:
+1. Закройте VGN VHUB.
+2. Перейдите в папку `C:\Program Files\VGN VHUB\resources\`.
+3. Удалите пропатченный файл `app.asar`.
+4. Переименуйте `app.asar.bak` to `app.asar`.
+5. Снова запустите VGN VHUB.
